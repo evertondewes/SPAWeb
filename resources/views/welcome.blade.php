@@ -78,21 +78,32 @@
                     @endauth
                 </div>
             @endif
-
+                <?php
+                $results = DB::select( DB::raw("SELECT * FROM banco;") );
+//                echo '<pre>' . print_r($results, true) . '</pre>';
+                ?>
             <div class="content">
-                <div class="title m-b-md">
-                    Laravel
-                </div>
+                <div class="container">
+                    <h1 class="page-header">Bancos</h1>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered table-hover">
+                            <thead>
+                            <tr>
+                                <th>codigo</th>
+                                <th>nome</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                        @foreach($results as $result)
+                            <tr>
+                                <th>{{ $result->codigo }}</th>
+                                <td style="text-align: left">{{ $result->nome }}</td>
+                            </tr>
+                        @endforeach
+                            </tbody>
+                        </table>
 
-                <div class="links">
-                    <a href="https://laravel.com/docs">Docs</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://blog.laravel.com">Blog</a>
-                    <a href="https://nova.laravel.com">Nova</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://vapor.laravel.com">Vapor</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
+                    </div>
                 </div>
             </div>
         </div>
