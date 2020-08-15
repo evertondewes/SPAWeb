@@ -2,6 +2,12 @@
 
 use Illuminate\Support\Str;
 
+
+if (!file_exists(env('DB_DATABASE', 'database/database.sqlite'))) {
+    touch(env('DB_DATABASE', 'database/database.sqlite'));
+}
+
+
 return [
 
     /*
