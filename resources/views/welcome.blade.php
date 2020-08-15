@@ -79,7 +79,10 @@
                 </div>
             @endif
                 <?php
-                $results = DB::select( DB::raw("SELECT * FROM banco;") );
+//                $results = DB::select( DB::raw("SELECT * FROM banco;") );
+                $results = DB::connection('mysql')->select( DB::raw("select cod_barra, descricao, vlr_venda, estoque, controlado, antibio, undvenda  from resultpdv.produtos;") );
+
+
 //                echo '<pre>' . print_r($results, true) . '</pre>';
                 ?>
             <div class="content">
@@ -89,15 +92,27 @@
                         <table class="table table-striped table-bordered table-hover">
                             <thead>
                             <tr>
+                                <th> asdsa</th>
                                 <th>codigo</th>
-                                <th>nome</th>
+                                <th>descricao</th>
+                                <th>vlr_venda</th>
+                                <th>estoque</th>
+                                <th>controlado</th>
+                                <th>antibio</th>
+                                <th>undvenda</th>
                             </tr>
                             </thead>
                             <tbody>
                         @foreach($results as $result)
                             <tr>
-                                <th>{{ $result->codigo }}</th>
-                                <td style="text-align: left">{{ $result->nome }}</td>
+                                <td><input type="checkbox" name="adopted" id="adopted" value="1"></td>
+                                <td>{{ $result->cod_barra }}</td>
+                                <td style="text-align: left">{{ $result->descricao }}</td>
+                                <td style="text-align: left">{{ $result->vlr_venda }}</td>
+                                <td style="text-align: left">{{ $result->estoque }}</td>
+                                <td style="text-align: left">{{ $result->controlado }}</td>
+                                <td style="text-align: left">{{ $result->antibio }}</td>
+                                <td style="text-align: left">{{ $result->undvenda }}</td>
                             </tr>
                         @endforeach
                             </tbody>
