@@ -83,6 +83,7 @@
                 $results = DB::connection('mysql')->select( DB::raw("select cod_barra, descricao, vlr_venda, estoque, controlado, antibio, undvenda  from resultpdv.produtos;") );
 
 
+
 //                echo '<pre>' . print_r($results, true) . '</pre>';
                 ?>
             <div class="content">

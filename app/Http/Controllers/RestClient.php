@@ -14,18 +14,18 @@ class RestClient extends Controller
     public $requestHeaders = array();
     public $ch = null;
 
-    public function __construct($uri_base, $recurso, $strChave, $bolIgnorarValidacaoCertificado = false, $ContentType = 'Content-Type:application/json') {
+    public function __construct($uri_base, $recurso, $strChave, $bolIgnorarValidacaoCertificado = false, $ContentType = 'Content-Type: application/x-www-form-urlencoded') {
 
         $this->requestHeaders[] = $ContentType;
 
-        $this->requestHeaders[] = 'Authorization: ' . $strChave;
+        $this->requestHeaders[] = 'authorization: ' . $strChave;
         $this->uri = $uri_base;
         $this->recurso = $recurso;
 
         $this->ch = curl_init();
         curl_setopt($this->ch, CURLOPT_FOLLOWLOCATION, false);
         curl_setopt($this->ch, CURLOPT_HTTPHEADER, $this->requestHeaders);
-//        curl_setopt($this->ch, CURLOPT_HEADERFUNCTION, array($this, '_header_callback'));
+        curl_setopt($this->ch, CURLOPT_HEADERFUNCTION, array($this, '_header_callback'));
         curl_setopt($this->ch, CURLOPT_RETURNTRANSFER, true);
 
         if($bolIgnorarValidacaoCertificado) {
@@ -110,14 +110,16 @@ class RestClient extends Controller
     }
 
     public function _header_callback($curl, $header_line) {
-        list ($key, $value) = explode(': ', $header_line);
-        $this->responseHeaders[$key] = $value;
+//        list ($key, $value) = explode(': ', $header_line);
+//        $this->responseHeaders[$key] = $value;
+        $this->responseHeaders[] = print_r($header_line, true);
+
         return strlen($header_line);
     }
 
     public function post($data) {
         curl_setopt($this->ch, CURLOPT_CUSTOMREQUEST, 'POST');
-        curl_setopt($this->ch, CURLOPT_URL, $this->uri  . $this->recurso  . '/' );
+        curl_setopt($this->ch, CURLOPT_URL, $this->uri  . $this->recurso ); // . '?acao=editar'  );
         curl_setopt($this->ch, CURLOPT_POSTFIELDS, ($data));
         return json_decode(curl_exec($this->ch));
     }

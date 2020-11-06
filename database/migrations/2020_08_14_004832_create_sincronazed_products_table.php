@@ -1,5 +1,4 @@
 <?php
-
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -23,6 +22,8 @@ class CreateSincronazedProductsTable extends Migration
             $table->decimal('vlr_venda', 14, 2);
             $table->string('controlado');
             $table->char('antibio', 1);
+            $table->boolean('sincronizar')->default(false);
+            $table->boolean('sincronizado')->default(false);
             $table->timestamps();
             $table->softDeletes();
         });
